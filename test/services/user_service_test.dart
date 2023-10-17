@@ -57,14 +57,35 @@ void main() {
     expect(res.firstName, listFakeUser.first.firstName);
   });
 
-  test('test throw error when failed', () async {
+  test('test throw error when failed get user', () async {
     when(userService.getUser(1)).thenThrow(
-        ServiceException(errorMessage: "Failed to fetch list users"));
+      ServiceException(errorMessage: "Failed to fetch user"),
+    );
 
     try {
       await userService.getUser(1);
     } catch (e) {
       expect(e, isA<ServiceException>());
+      expect(
+        (e as ServiceException).errorMessage,
+        "Failed to fetch user",
+      );
+    }
+  });
+
+  test('test throw error when failed get users', () async {
+    when(userService.getUsers("")).thenThrow(
+      ServiceException(errorMessage: "Failed to fetch list users"),
+    );
+
+    try {
+      await userService.getUsers("");
+    } catch (e) {
+      expect(e, isA<ServiceException>());
+      expect(
+        (e as ServiceException).errorMessage,
+        "Failed to fetch list users",
+      );
     }
   });
 }
