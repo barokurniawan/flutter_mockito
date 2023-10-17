@@ -1,3 +1,4 @@
+import 'package:flutter_mockito/exceptions/service_exception.dart';
 import 'package:flutter_mockito/models/user.dart';
 import 'package:flutter_mockito/services/user_service.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -28,6 +29,7 @@ void main() {
       email: "Fake user",
     ),
   ];
+
   late MockUserService userService;
 
   setUpAll(() {
@@ -42,5 +44,27 @@ void main() {
     final res = await userService.getUsers("");
     expect(res, isA<List<User>>());
     expect(res, listFakeUser);
+  });
+
+  test('test get user by ID', () async {
+    when(userService.getUser(1)).thenAnswer((_) async {
+      return listFakeUser.first;
+    });
+
+    final res = await userService.getUser(1);
+    expect(res, isA<User>());
+    expect(res, listFakeUser.first);
+    expect(res.firstName, listFakeUser.first.firstName);
+  });
+
+  test('test throw error when failed', () async {
+    when(userService.getUser(1)).thenThrow(
+        ServiceException(errorMessage: "Failed to fetch list users"));
+
+    try {
+      await userService.getUser(1);
+    } catch (e) {
+      expect(e, isA<ServiceException>());
+    }
   });
 }
