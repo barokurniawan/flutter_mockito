@@ -15,7 +15,6 @@ void main() {
 
     await widgetTester.pumpWidget(MaterialApp(
       home: MainView(
-        title: appTitle,
         userService: MockUserServiceContract(),
       ),
     ));

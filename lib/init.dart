@@ -1,6 +1,7 @@
 import 'package:flutter_mockito/contracts/http_service_contract.dart';
 import 'package:flutter_mockito/contracts/user_service_contract.dart';
 import 'package:flutter_mockito/main.dart';
+import 'package:flutter_mockito/router.dart';
 import 'package:flutter_mockito/services/http_service.dart';
 import 'package:flutter_mockito/services/user_service.dart';
 
@@ -18,6 +19,11 @@ initGetIt({bool isTest = false}) {
 
     return;
   }
+
+  getIt.registerSingleton<AppRouter>(
+    AppRouter(),
+    signalsReady: true,
+  );
 
   getIt.registerSingleton<HttpServiceContract>(
     HttpService(),
