@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mockito/contracts/user_service_contract.dart';
-import 'package:flutter_mockito/main.dart';
+import 'package:flutter_mockito/views/main_view.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 
@@ -14,7 +14,7 @@ void main() {
     const appTitle = "My App";
 
     await widgetTester.pumpWidget(MaterialApp(
-      home: MyHomePage(
+      home: MainView(
         title: appTitle,
         userService: MockUserServiceContract(),
       ),
