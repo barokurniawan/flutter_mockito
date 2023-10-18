@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_mockito/contracts/http_contract.dart';
+import 'package:flutter_mockito/contracts/http_service_contract.dart';
 
-class HttpService extends HttpContract {
+class HttpService extends HttpServiceContract {
   @override
   Future<Response<T>> request<T>(
     String url, {

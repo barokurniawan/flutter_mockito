@@ -28,4 +28,16 @@ class User {
       email: json['email'],
     );
   }
+
+  toJson() {
+    return {
+      "id": id,
+      "firstName": firstName,
+      "lastName": lastName,
+      "maidenName": maidenName,
+      "image": image,
+      "gender": gender,
+      "email": email,
+    };
+  }
 }

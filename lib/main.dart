@@ -1,29 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mockito/services/http_service.dart';
-import 'package:flutter_mockito/services/user_service.dart';
+import 'package:flutter_mockito/contracts/user_service_contract.dart';
+import 'package:flutter_mockito/init.dart';
+import 'package:get_it/get_it.dart';
+
+final getIt = GetIt.instance;
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  initGetIt();
+  runApp(const FlutterMockito());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class FlutterMockito extends StatelessWidget {
+  const FlutterMockito({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final userService = GetIt.I<UserServiceContract>();
+
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter with Mockito',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'My App', userService: userService),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  final UserServiceContract userService;
+
+  const MyHomePage({
+    super.key,
+    required this.title,
+    required this.userService,
+  });
 
   final String title;
 
@@ -32,47 +46,35 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  UserService userService = UserService(httpService: HttpService());
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: FutureBuilder(
-          future: userService.getUsers(""),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
-            }
+    final userService = widget.userService;
 
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final user = snapshot.data!.elementAt(index);
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(user.image),
-                  ),
-                  title: Text(user.firstName),
-                  subtitle: Text(user.email),
-                );
-              },
-            );
-          }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    return Scaffold(
+      appBar: AppBar(title: Text(widget.title)),
+      // body: const Text("data"),
+      body: FutureBuilder(
+        future: userService.getUsers(""),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              final user = snapshot.data!.elementAt(index);
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage(user.image),
+                ),
+                title: Text(user.firstName),
+                subtitle: Text(user.email),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:flutter_mockito/contracts/http_service_contract.dart';
 import 'package:flutter_mockito/exceptions/service_exception.dart';
 import 'package:flutter_mockito/models/user.dart';
 import 'package:flutter_mockito/services/user_service.dart';
@@ -5,9 +7,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-@GenerateNiceMocks([MockSpec<UserService>()])
 import 'user_service_test.mocks.dart';
 
+@GenerateNiceMocks([
+  MockSpec<HttpServiceContract>(),
+])
 void main() {
   final listFakeUser = [
     User(
@@ -30,37 +34,54 @@ void main() {
     ),
   ];
 
-  late MockUserService userService;
+  late UserService userService;
+  late HttpServiceContract httpService;
 
   setUpAll(() {
-    userService = MockUserService();
+    httpService = MockHttpServiceContract();
+    userService = UserService(httpService: httpService);
   });
 
   test('Test fetch list users', () async {
-    when(userService.getUsers("")).thenAnswer((_) async {
-      return listFakeUser;
+    final mapFakeUser = listFakeUser.map((e) => e.toJson());
+
+    when(httpService.request("https://dummyjson.com/users", method: "GET"))
+        .thenAnswer((_) async {
+      return Future.value(Response(
+        data: {"users": mapFakeUser},
+        statusCode: 200,
+        requestOptions: RequestOptions(),
+      ));
     });
 
     final res = await userService.getUsers("");
     expect(res, isA<List<User>>());
-    expect(res, listFakeUser);
   });
 
   test('test get user by ID', () async {
-    when(userService.getUser(1)).thenAnswer((_) async {
-      return listFakeUser.first;
+    when(httpService.request("https://dummyjson.com/users/1", method: "GET"))
+        .thenAnswer((_) async {
+      return Future.value(Response(
+        data: listFakeUser.first.toJson(),
+        statusCode: 200,
+        requestOptions: RequestOptions(),
+      ));
     });
 
     final res = await userService.getUser(1);
     expect(res, isA<User>());
-    expect(res, listFakeUser.first);
     expect(res.firstName, listFakeUser.first.firstName);
   });
 
   test('test throw error when failed get user', () async {
-    when(userService.getUser(1)).thenThrow(
-      ServiceException(errorMessage: "Failed to fetch user"),
-    );
+    when(httpService.request("https://dummyjson.com/users/1", method: "GET"))
+        .thenAnswer((_) async {
+      return Future.value(Response(
+        data: null,
+        statusCode: 400,
+        requestOptions: RequestOptions(),
+      ));
+    });
 
     try {
       await userService.getUser(1);
@@ -74,9 +95,14 @@ void main() {
   });
 
   test('test throw error when failed get users', () async {
-    when(userService.getUsers("")).thenThrow(
-      ServiceException(errorMessage: "Failed to fetch list users"),
-    );
+    when(httpService.request("https://dummyjson.com/users", method: "GET"))
+        .thenAnswer((_) async {
+      return Future.value(Response(
+        data: null,
+        statusCode: 400,
+        requestOptions: RequestOptions(),
+      ));
+    });
 
     try {
       await userService.getUsers("");

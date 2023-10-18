@@ -3,11 +3,10 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i4;
 
-import 'package:flutter_mockito/models/user.dart' as _i3;
-import 'package:flutter_mockito/services/http_service.dart' as _i2;
-import 'package:flutter_mockito/services/user_service.dart' as _i4;
+import 'package:dio/dio.dart' as _i2;
+import 'package:flutter_mockito/contracts/http_service_contract.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -21,8 +20,8 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeHttpService_0 extends _i1.SmartFake implements _i2.HttpService {
-  _FakeHttpService_0(
+class _FakeResponse_0<T1> extends _i1.SmartFake implements _i2.Response<T1> {
+  _FakeResponse_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -31,63 +30,52 @@ class _FakeHttpService_0 extends _i1.SmartFake implements _i2.HttpService {
         );
 }
 
-class _FakeUser_1 extends _i1.SmartFake implements _i3.User {
-  _FakeUser_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-/// A class which mocks [UserService].
+/// A class which mocks [HttpServiceContract].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockUserService extends _i1.Mock implements _i4.UserService {
+class MockHttpServiceContract extends _i1.Mock
+    implements _i3.HttpServiceContract {
   @override
-  _i2.HttpService get httpService => (super.noSuchMethod(
-        Invocation.getter(#httpService),
-        returnValue: _FakeHttpService_0(
-          this,
-          Invocation.getter(#httpService),
-        ),
-        returnValueForMissingStub: _FakeHttpService_0(
-          this,
-          Invocation.getter(#httpService),
-        ),
-      ) as _i2.HttpService);
-
-  @override
-  _i5.Future<_i3.User> getUser(int? id) => (super.noSuchMethod(
+  _i4.Future<_i2.Response<T>> request<T>(
+    String? url, {
+    required String? method,
+    Map<String, dynamic>? queryString,
+    Object? data,
+  }) =>
+      (super.noSuchMethod(
         Invocation.method(
-          #getUser,
-          [id],
+          #request,
+          [url],
+          {
+            #method: method,
+            #queryString: queryString,
+            #data: data,
+          },
         ),
-        returnValue: _i5.Future<_i3.User>.value(_FakeUser_1(
+        returnValue: _i4.Future<_i2.Response<T>>.value(_FakeResponse_0<T>(
           this,
           Invocation.method(
-            #getUser,
-            [id],
+            #request,
+            [url],
+            {
+              #method: method,
+              #queryString: queryString,
+              #data: data,
+            },
           ),
         )),
-        returnValueForMissingStub: _i5.Future<_i3.User>.value(_FakeUser_1(
-          this,
-          Invocation.method(
-            #getUser,
-            [id],
-          ),
-        )),
-      ) as _i5.Future<_i3.User>);
-
-  @override
-  _i5.Future<List<_i3.User>> getUsers(String? search) => (super.noSuchMethod(
-        Invocation.method(
-          #getUsers,
-          [search],
-        ),
-        returnValue: _i5.Future<List<_i3.User>>.value(<_i3.User>[]),
         returnValueForMissingStub:
-            _i5.Future<List<_i3.User>>.value(<_i3.User>[]),
-      ) as _i5.Future<List<_i3.User>>);
+            _i4.Future<_i2.Response<T>>.value(_FakeResponse_0<T>(
+          this,
+          Invocation.method(
+            #request,
+            [url],
+            {
+              #method: method,
+              #queryString: queryString,
+              #data: data,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.Response<T>>);
 }

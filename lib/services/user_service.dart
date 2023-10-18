@@ -1,10 +1,10 @@
-import 'package:flutter_mockito/contracts/user_contract.dart';
+import 'package:flutter_mockito/contracts/http_service_contract.dart';
+import 'package:flutter_mockito/contracts/user_service_contract.dart';
 import 'package:flutter_mockito/exceptions/service_exception.dart';
 import 'package:flutter_mockito/models/user.dart';
-import 'package:flutter_mockito/services/http_service.dart';
 
-class UserService extends UserContract {
-  final HttpService httpService;
+class UserService extends UserServiceContract {
+  final HttpServiceContract httpService;
 
   UserService({
     required this.httpService,
@@ -15,7 +15,7 @@ class UserService extends UserContract {
     final resp = await httpService.request("https://dummyjson.com/users/$id",
         method: "GET");
     if (resp.statusCode != 200) {
-      throw ServiceException(errorMessage: "Failed to fetch list users");
+      throw ServiceException(errorMessage: "Failed to fetch user");
     }
 
     final user = User.fromJson(resp.data);

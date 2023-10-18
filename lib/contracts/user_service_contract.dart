@@ -1,6 +1,6 @@
 import 'package:flutter_mockito/models/user.dart';
 
-abstract class UserContract {
+abstract class UserServiceContract {
   Future<User> getUser(int id);
   Future<List<User>> getUsers(String? search);
 }

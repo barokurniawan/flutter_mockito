@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-abstract class HttpContract {
+abstract class HttpServiceContract {
   Future<Response<T>> request<T>(
     String url, {
     required String method,
