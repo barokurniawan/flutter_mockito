@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mockito/contracts/user_service_contract.dart';
 import 'package:flutter_mockito/init.dart';
 import 'package:flutter_mockito/router.dart';
-import 'package:flutter_mockito/views/main_view.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,7 +9,7 @@ final getIt = GetIt.instance;
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  initGetIt();
+  initGetIt(getIt);
   runApp(const FlutterMockito());
 }
 

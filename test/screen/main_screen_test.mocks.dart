@@ -3,10 +3,12 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i6;
 
-import 'package:flutter_mockito/contracts/user_service_contract.dart' as _i3;
+import 'package:auto_route/auto_route.dart' as _i4;
+import 'package:flutter_mockito/contracts/user_service_contract.dart' as _i5;
 import 'package:flutter_mockito/models/user.dart' as _i2;
+import 'package:flutter_mockito/router.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -30,41 +32,53 @@ class _FakeUser_0 extends _i1.SmartFake implements _i2.User {
         );
 }
 
+/// A class which mocks [AppRouter].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAppRouter extends _i1.Mock implements _i3.AppRouter {
+  @override
+  List<_i4.AutoRoute> get routes => (super.noSuchMethod(
+        Invocation.getter(#routes),
+        returnValue: <_i4.AutoRoute>[],
+        returnValueForMissingStub: <_i4.AutoRoute>[],
+      ) as List<_i4.AutoRoute>);
+}
+
 /// A class which mocks [UserServiceContract].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockUserServiceContract extends _i1.Mock
-    implements _i3.UserServiceContract {
+    implements _i5.UserServiceContract {
   @override
-  _i4.Future<_i2.User> getUser(int? id) => (super.noSuchMethod(
+  _i6.Future<_i2.User> getUser(int? id) => (super.noSuchMethod(
         Invocation.method(
           #getUser,
           [id],
         ),
-        returnValue: _i4.Future<_i2.User>.value(_FakeUser_0(
+        returnValue: _i6.Future<_i2.User>.value(_FakeUser_0(
           this,
           Invocation.method(
             #getUser,
             [id],
           ),
         )),
-        returnValueForMissingStub: _i4.Future<_i2.User>.value(_FakeUser_0(
+        returnValueForMissingStub: _i6.Future<_i2.User>.value(_FakeUser_0(
           this,
           Invocation.method(
             #getUser,
             [id],
           ),
         )),
-      ) as _i4.Future<_i2.User>);
+      ) as _i6.Future<_i2.User>);
 
   @override
-  _i4.Future<List<_i2.User>> getUsers(String? search) => (super.noSuchMethod(
+  _i6.Future<List<_i2.User>> getUsers(String? search) => (super.noSuchMethod(
         Invocation.method(
           #getUsers,
           [search],
         ),
-        returnValue: _i4.Future<List<_i2.User>>.value(<_i2.User>[]),
+        returnValue: _i6.Future<List<_i2.User>>.value(<_i2.User>[]),
         returnValueForMissingStub:
-            _i4.Future<List<_i2.User>>.value(<_i2.User>[]),
-      ) as _i4.Future<List<_i2.User>>);
+            _i6.Future<List<_i2.User>>.value(<_i2.User>[]),
+      ) as _i6.Future<List<_i2.User>>);
 }
