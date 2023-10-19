@@ -6,7 +6,6 @@ import 'package:flutter_mockito/contracts/user_service_contract.dart';
 import 'package:flutter_mockito/models/user.dart';
 import 'package:flutter_mockito/router.dart';
 import 'package:flutter_mockito/router.gr.dart';
-import 'package:flutter_mockito/services/user_service.dart';
 import 'package:flutter_mockito/utils/debouncer.dart';
 import 'package:get_it/get_it.dart';
 
