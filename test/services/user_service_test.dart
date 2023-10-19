@@ -22,6 +22,8 @@ void main() {
       image: "Fake user",
       gender: "Fake user",
       email: "Fake user",
+      domain: "domaine",
+      university: "university",
     ),
     User(
       id: 2,
@@ -31,6 +33,8 @@ void main() {
       image: "Fake user",
       gender: "Fake user",
       email: "Fake user",
+      domain: "domaine",
+      university: "university",
     ),
   ];
 

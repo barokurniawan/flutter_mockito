@@ -24,14 +24,18 @@ class UserService extends UserServiceContract {
 
   @override
   Future<List<User>> getUsers(String? search) async {
-    final resp =
-        await httpService.request("https://dummyjson.com/users", method: "GET");
+    String url = "https://dummyjson.com/users";
+    if (search?.isNotEmpty ?? false) {
+      url = "$url/search?q=$search";
+    }
+
+    final resp = await httpService.request(url, method: "GET");
     if (resp.statusCode != 200) {
       throw ServiceException(errorMessage: "Failed to fetch list users");
     }
 
-    final users =
-        (resp.data['users'] as Iterable).map((e) => User.fromJson(e)).toList();
-    return users;
+    return (resp.data['users'] as Iterable)
+        .map((e) => User.fromJson(e))
+        .toList();
   }
 }

@@ -14,6 +14,8 @@ void main() {
       image: "https://dummyimage-com.translate.goog/300",
       gender: "gender",
       email: "email",
+      domain: "wwwdot.com",
+      university: "Metropolis University",
     );
 
     await mockNetworkImagesFor(

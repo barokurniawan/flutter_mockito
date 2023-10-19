@@ -30,4 +30,19 @@ void main() {
     final titleFinder = find.text(appTitle);
     expect(titleFinder, findsOneWidget);
   });
+
+  testWidgets("Can click on search", (widgetTester) async {
+    await widgetTester.pumpWidget(MaterialApp(
+      home: MainView(
+        userService: MockUserServiceContract(),
+      ),
+    ));
+
+    await widgetTester.tap(find.byIcon(Icons.search));
+
+    await widgetTester.pumpAndSettle();
+
+    final finder = find.byType(TextField);
+    expect(finder, findsOneWidget);
+  });
 }
