@@ -75,6 +75,7 @@ class _MainViewState extends State<MainView> {
           }
 
           return ListView.builder(
+            key: const Key("usersListView"),
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               final user = snapshot.data!.elementAt(index);
